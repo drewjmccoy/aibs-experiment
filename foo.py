@@ -4,7 +4,7 @@
 from psychopy import visual, core, event  # import some libraries from PsychoPy
 
 # create a window
-mywin = visual.Window([800,600],
+mywin = visual.Window([800,800],
                         monitor="testMonitor",
                         units="deg")
 
@@ -28,6 +28,20 @@ zShape = visual.ShapeStim(win=mywin,
                                     (1, -1)),
                         closeShape=False
                         )
+# a thick blue Z
+zThickShape = visual.ShapeStim(win=mywin,
+                        vertices=((-10, 10),
+                                    (10, 10),
+                                    (10, 8),
+                                    (-7, -8),
+                                    (10, -8),
+                                    (10, -10),
+                                    (-10, -10),
+                                    (-10, -8),
+                                    (7, 8),
+                                    (-10, 8)),
+                        )
+
 
 # loop setup
 play = True
@@ -39,10 +53,11 @@ while play:
     # grating.setPhase(1.05, '+')
 
     # draw stimuli half the time
-    if frameN % 100 < 50:
+    if frameN % 100 < 80:
         # grating.draw()
         # square.draw()
-        zShape.draw()
+        # zShape.draw()
+        zThickShape.draw();
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:
