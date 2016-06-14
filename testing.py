@@ -50,9 +50,12 @@ zOutline = visual.ShapeStim(win=mywin,
                                     (-10, -10),
                                     (-10, -8),
                                     (7, 8),
-                                    (-10, 8))
+                                    (-10, 8)),
                         # fillColor=[0, 0, 255]
                         )
+# triangle = visual.ShapeStim(win=mywin
+#                         vertices=((0, 1),)
+#                         )
 
 
 # loop setup
@@ -69,7 +72,8 @@ while play:
         # grating.draw()
         # square.draw()
         # zShape.draw()
-        zThickShape.draw()
+        # zThickShape.draw()
+        zOutline.draw()
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:
