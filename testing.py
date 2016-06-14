@@ -28,8 +28,19 @@ zShape = visual.ShapeStim(win=mywin,
                                     (1, -1)),
                         closeShape=False
                         )
-# a thick blue Z
+# a thick Z
 zThickShape = visual.ShapeStim(win=mywin,
+                        vertices=((-1, 1),
+                                    (1, 1),
+                                    (-1, -1),
+                                    (1, -1)),
+                        closeShape=False,
+                        lineWidth=10
+                        )
+
+# an outline of a Z
+# coloring is interesting here, fillColor=[0, 0, 255] parameter is off
+zOutline = visual.ShapeStim(win=mywin,
                         vertices=((-10, 10),
                                     (10, 10),
                                     (10, 8),
@@ -39,7 +50,8 @@ zThickShape = visual.ShapeStim(win=mywin,
                                     (-10, -10),
                                     (-10, -8),
                                     (7, 8),
-                                    (-10, 8)),
+                                    (-10, 8))
+                        # fillColor=[0, 0, 255]
                         )
 
 
@@ -57,7 +69,7 @@ while play:
         # grating.draw()
         # square.draw()
         # zShape.draw()
-        zThickShape.draw();
+        zThickShape.draw()
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:
