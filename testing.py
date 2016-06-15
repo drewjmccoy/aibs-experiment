@@ -90,9 +90,7 @@ while play:
         pass
 
     # draw non-blinking stims
-    # skel.skeleton.draw()
-    for i in range(skel.length):
-        skel.shapeList[i].draw()
+    skel.draw()
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:

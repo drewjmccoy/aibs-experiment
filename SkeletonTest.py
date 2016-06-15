@@ -16,6 +16,10 @@ class Skeleton:
         self.shapeList = []
         self._createShapeList(window=window)
 
+    def draw(self):
+        for i in range(len(self.shapeList)):
+            self.shapeList[i].draw()
+
     def _createShapeList(self, window):
         if self.length > 0:
             # create first circle and add (fence post)
