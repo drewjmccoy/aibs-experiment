@@ -2,6 +2,7 @@
 # testing psychopy
 
 from psychopy import visual, core, event  # import some libraries from PsychoPy
+from SkeletonTest import Skeleton
 
 # create a window
 mywin = visual.Window([800,800],
@@ -13,13 +14,19 @@ mywin = visual.Window([800,800],
 grating = visual.GratingStim(win=mywin,
                         mask="circle",
                         size=3, sf=3)
+
 # a square
 square = visual.ShapeStim(win=mywin,
-                        vertices=((-1, -1),
+                        vertices=[(-1, -1),
                                     (-1, 1),
                                     (1, 1),
-                                    (1, -1))
+                                    (1, -1)]
+                        # vertices=((-1, -1),
+                        #             (-1, 1),
+                        #             (1, 1),
+                        #             (1, -1))
                         )
+
 # a Z
 zShape = visual.ShapeStim(win=mywin,
                         vertices=((-1, 1),
@@ -28,6 +35,7 @@ zShape = visual.ShapeStim(win=mywin,
                                     (1, -1)),
                         closeShape=False
                         )
+
 # a thick Z
 zThickShape = visual.ShapeStim(win=mywin,
                         vertices=((-1, 1),
@@ -53,9 +61,14 @@ zOutline = visual.ShapeStim(win=mywin,
                                     (-10, 8)),
                         # fillColor=[0, 0, 255]
                         )
-# triangle = visual.ShapeStim(win=mywin
-#                         vertices=((0, 1),)
-#                         )
+
+# Skeleton test
+skel = Skeleton(window=mywin,
+                vertices=[(-1, 1),
+                            (1, 1),
+                            (-1, -1),
+                            (1, -1)]
+                )
 
 
 # loop setup
@@ -67,13 +80,19 @@ while play:
     # advance phase by 0.05 of a cycle
     # grating.setPhase(1.05, '+')
 
-    # draw stimuli half the time
+    # draw blinking stims
     if frameN % 100 < 80:
         # grating.draw()
         # square.draw()
         # zShape.draw()
         # zThickShape.draw()
-        zOutline.draw()
+        # zOutline.draw()
+        pass
+
+    # draw non-blinking stims
+    # skel.skeleton.draw()
+    for i in range(skel.length):
+        skel.shapeList[i].draw()
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:
