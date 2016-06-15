@@ -2,7 +2,7 @@
 # testing psychopy
 
 from psychopy import visual, core, event  # import some libraries from PsychoPy
-from SkeletonTest import Skeleton
+from shapes import Skeleton
 
 # create a window
 mywin = visual.Window([800,800],

@@ -1,7 +1,7 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
-# Testing circle/rect idea
+# defines Skeleton
 
-from psychopy import visual, core, event
+from psychopy import visual
 
 
 class Skeleton:
@@ -9,9 +9,9 @@ class Skeleton:
     def __init__(self, window, vertices):
         self.vertices = vertices
         self.skeleton = visual.ShapeStim(win=window,
-                                        vertices=self.vertices,
-                                        closeShape=False
-                                        )
+                                         vertices=self.vertices,
+                                         closeShape=False
+                                         )
         self._shapeList = []
         self._createShapeList(window=window)
 
@@ -23,11 +23,11 @@ class Skeleton:
         if len(self.vertices) > 0:
             # create first circle and add (fence post)
             circle = visual.Circle(win=window,
-                                    radius = 0.5,
-                                    edges = 32,
-                                    fillColor = "white",
-                                    pos = self.vertices[0]
-                                    )
+                                   radius = 0.5,
+                                   edges = 32,
+                                   fillColor = "white",
+                                   pos = self.vertices[0]
+                                   )
             self._shapeList.append(circle)
 
             # add rest of the 'fence'
@@ -37,10 +37,10 @@ class Skeleton:
 
                 # create end circle
                 circleEnd = visual.Circle(win=window,
-                                        radius = 0.5,
-                                        edges = 32,
-                                        fillColor = "white",
-                                        pos = self.vertices[vertex]
-                                        )
+                                          radius = 0.5,
+                                          edges = 32,
+                                          fillColor = "white",
+                                          pos = self.vertices[vertex]
+                                          )
                 self._shapeList.append(circleEnd)
                 vertex += 1
