@@ -1,5 +1,6 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
 # defines Rectangle, Skeleton
+# TODO: Rectangle breaks with non-nice numbers - see v3 in stimulus-design
 
 from psychopy import visual
 import math
@@ -37,7 +38,7 @@ class Rectangle:
         # if slope is undefined
         if dx is 0:
             if dy < 0:
-                return 45
+                return 90
             else:
                 return 270
 
@@ -86,8 +87,8 @@ class Skeleton:
             # add rest of the 'fence'
             vertex = 1
             while vertex < len(self.vertices):
+
                 # draw rectangle
-                # if vertex is 1:
                 rectangle = Rectangle(window=window,
                                       p0=self.vertices[vertex - 1],
                                       p1=self.vertices[vertex]
