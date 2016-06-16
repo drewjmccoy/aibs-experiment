@@ -10,12 +10,24 @@ mywin = visual.Window([800,800],
                       monitor="testMonitor",
                       units="deg")
 
+# a bunch of lists of vertices to test
+v1 = [(-1, 1), # Z
+      (1, 1),
+      (-1, -1),
+      (1, -1)]
+v2 = [(-1, 1), # square
+      (1, 1),
+      (1, -1),
+      (-1, -1),
+      (-1, 1)]
+v3 = [(1, 1),
+      (-1, 1),
+      (1, -2),
+      (-1, -2)]
+
 # Skeleton shape
 skel = Skeleton(window=mywin,
-                vertices=[(-1, 1),
-                            (1, 1),
-                            (-1, -1),
-                            (1, -1)]
+                vertices=v3
                 )
 
 # -------------------------------------MAIN LOOP-----------------------------------------

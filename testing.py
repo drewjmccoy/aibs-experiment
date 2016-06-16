@@ -17,10 +17,7 @@ grating = visual.GratingStim(win=mywin,
 
 # a square
 square = visual.ShapeStim(win=mywin,
-                        vertices=[(-1, -1),
-                                    (-1, 1),
-                                    (1, 1),
-                                    (1, -1)]
+                        vertices
                         # vertices=((-1, -1),
                         #             (-1, 1),
                         #             (1, 1),
