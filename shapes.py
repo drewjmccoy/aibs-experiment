@@ -1,6 +1,6 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
 # defines Rectangle, Skeleton
-# TODO: Rectangle breaks with non-nice numbers - see v3 in stimulus-design
+# TODO: Rectangle breaks with non-nice numbers - see v3, v4 in stimulus-design
 
 from psychopy import visual
 import math
@@ -8,28 +8,31 @@ import math
 # class that defines a Rectangle ShapeStim, given two end points
 class Rectangle:
 
-    def __init__(self, window, p0, p1):
+    def __init__(self, window, p0, p1, thickness=20):
         self._rectangle = visual.Rect(win=window,
+                                      units="pix",
                                       fillColor="white",
                                       width=self._getWidth(p0, p1),
-                                      height=self._getHeight(),
+                                      height=thickness,
                                       pos=self._getPosition(p0, p1),
                                       ori=self._getOrientation(p0, p1)
                                       )
-    def _getHeight(self):
-        return 1
 
+    # returns the width of the Rectangle
     def _getWidth(self, p0, p1):
         return math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
 
+    # returns the position (midpoint) of the Rectangle
     def _getPosition(self, p0, p1):
         # use midpoint formula
-        print "(" + str(p0) + ", " + str(p1) + ")"
+        # print "(" + str(p0) + ", " + str(p1) + ")"
         x = (p1[0] + p0[0]) / 2
         y = (p1[1] + p0[1]) / 2
-        print "(" + str(x) + ", " + str(y) + ")"
+        # print "(" + str(x) + ", " + str(y) + ")"
         return (x, y)
 
+    # returns the orientation of the Rectangle in degrees. 0 is up, increasing
+    # clockwise
     def _getOrientation(self, p0, p1):
         # get change y and x
         dy = p1[1] - p0[1]
@@ -55,14 +58,18 @@ class Rectangle:
         if dy < 0:
             deg += 180
 
+        print str(deg)
+
         return deg
 
 # draws a ShapeStim from a skeleton (list of verices)
 class Skeleton:
 
-    def __init__(self, window, vertices):
+    def __init__(self, window, vertices, thickness=20):
+        self.thickness = thickness
         self.vertices = vertices
         self.skeleton = visual.ShapeStim(win=window,
+                                         units="pix",
                                          vertices=self.vertices,
                                          closeShape=False
                                          )
@@ -77,7 +84,8 @@ class Skeleton:
         if len(self.vertices) > 0:
             # create first circle and add (fence post)
             circle = visual.Circle(win=window,
-                                   radius=0.5,
+                                   units="pix",
+                                   radius=(self.thickness / 2),
                                    edges=32,
                                    fillColor="white",
                                    pos=self.vertices[0]
@@ -97,7 +105,8 @@ class Skeleton:
 
                 # create end circle
                 circleEnd = visual.Circle(win=window,
-                                          radius=0.5,
+                                          units="pix",
+                                          radius=(self.thickness / 2),
                                           edges=32,
                                           fillColor="white",
                                           pos=self.vertices[vertex]
