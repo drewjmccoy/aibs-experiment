@@ -114,14 +114,6 @@ class SkeletonNode(object):
         self.position = position
         self.connections = connections
 
-    def __str__(self):
-        result = str(self.position) + ": "
-        for i in self.connections:
-            result += str(self.connections)
-        return result
-
-    __repr__ = __str__
-
 # a shape stimulus
 # SkeletonStim(window, root, thickness)
 class SkeletonStim(object):
