@@ -23,6 +23,7 @@ class Rectangle:
         return math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
 
     # returns the position (midpoint) of the Rectangle
+    # TODO buggy for v3, v4
     def _getPosition(self, p0, p1):
         # use midpoint formula
         # print "(" + str(p0) + ", " + str(p1) + ")"
@@ -33,6 +34,7 @@ class Rectangle:
 
     # returns the orientation of the Rectangle in degrees. 0 is up, increasing
     # clockwise
+    # TODO buggy for v3, v4
     def _getOrientation(self, p0, p1):
         # get change y and x
         dy = p1[1] - p0[1]
@@ -58,7 +60,7 @@ class Rectangle:
         if dy < 0:
             deg += 180
 
-        print str(deg)
+        # print str(deg)
 
         return deg
 
