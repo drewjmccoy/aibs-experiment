@@ -1,5 +1,6 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
-# defines Rectangle, SkeletonNode, SkeletonStim
+# defines Rectangle, Skeleton
+# OUTDATED
 
 from psychopy import visual
 import math
@@ -54,6 +55,56 @@ class Rectangle(object):
         deg = math.degrees(rad)
 
         return deg
+
+# draws a ShapeStim from a skeleton (list of verices)
+# SkeletonTemp(window, vertices, thickness)
+class SkeletonTemp(object):
+
+    def __init__(self, window, vertices=[], thickness=20):
+        self.thickness = thickness
+        self.vertices = vertices
+        self.skeleton = visual.ShapeStim(win=window,
+                                         units="pix",
+                                         vertices=self.vertices,
+                                         closeShape=False
+                                         )
+        self._shapeList = []
+        self._createShapeList(window=window)
+
+    def draw(self):
+        for i in range(len(self._shapeList)):
+            self._shapeList[i].draw()
+
+    def _createShapeList(self, window):
+        if len(self.vertices) > 0:
+            # create first circle and add (fence post)
+            circle = visual.Circle(win=window,
+                                   units="pix",
+                                   radius=(self.thickness / 2),
+                                   edges=32,
+                                   fillColor="white",
+                                   pos=self.vertices[0])
+            self._shapeList.append(circle)
+
+            # add rest of the 'fence'
+            vertex = 1
+            while vertex < len(self.vertices):
+
+                # draw rectangle
+                rectangle = Rectangle(window=window,
+                                      p0=self.vertices[vertex - 1],
+                                      p1=self.vertices[vertex])
+                self._shapeList.append(rectangle._rectangle)
+
+                # create end circle
+                circleEnd = visual.Circle(win=window,
+                                          units="pix",
+                                          radius=(self.thickness / 2),
+                                          edges=32,
+                                          fillColor="white",
+                                          pos=self.vertices[vertex])
+                self._shapeList.append(circleEnd)
+                vertex += 1
 
 # a node of a skeleton data structure
 # SkeletonNode(position, connections)
