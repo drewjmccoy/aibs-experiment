@@ -1,12 +1,12 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
 # defines Rectangle, Skeleton
-# TODO: Rectangle breaks with non-nice numbers - see v3, v4 in stimulus-design
 
 from psychopy import visual
 import math
 
 # class that defines a Rectangle ShapeStim, given two end points
-class Rectangle:
+# Rectangle(window, p0, p1, thickness=20)
+class Rectangle(object):
 
     def __init__(self, window, p0, p1, thickness=20):
         self._rectangle = visual.Rect(win=window,
@@ -18,23 +18,29 @@ class Rectangle:
                                       ori=self._getOrientation(p0, p1)
                                       )
 
+    def draw(self):
+        self._rectangle.draw()
+
     # returns the width of the Rectangle
     def _getWidth(self, p0, p1):
-        return math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
+        # print "p0: (" + str(p0[0]) + ", " + str(p0[1]) + ")"
+        # print "p1: (" + str(p1[0]) + ", " + str(p1[1]) + ")"
+        result = math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
+        # print "Width: " + str(result)
+        return result
 
     # returns the position (midpoint) of the Rectangle
-    # TODO buggy for v3, v4
     def _getPosition(self, p0, p1):
         # use midpoint formula
         # print "(" + str(p0) + ", " + str(p1) + ")"
         x = (p1[0] + p0[0]) / 2
         y = (p1[1] + p0[1]) / 2
         # print "(" + str(x) + ", " + str(y) + ")"
+        # print "Position: (" + str(x) + ", " + str(y) + ")"
         return (x, y)
 
     # returns the orientation of the Rectangle in degrees. 0 is up, increasing
     # clockwise
-    # TODO buggy for v3, v4
     def _getOrientation(self, p0, p1):
         # get change y and x
         dy = p1[1] - p0[1]
@@ -43,29 +49,25 @@ class Rectangle:
         # if slope is undefined
         if dx is 0:
             if dy < 0:
+                # print "Orientation: 90 degrees"
                 return 90
             else:
+                # print "Orientation: 270 degrees"
                 return 270
 
-        # get slope
-        slope = dy / dx
-
         # get temp radians of orientation (neg b/c psychopy is weird)
-        rad = -math.atan(slope)
+        rad = -math.atan2(dy, dx)
 
         # to degrees
         deg = math.degrees(rad)
 
-        # if dy is neg, add 180
-        if dy < 0:
-            deg += 180
-
-        # print str(deg)
+        # print "Orientation: " + str(deg) + " degrees"
 
         return deg
 
 # draws a ShapeStim from a skeleton (list of verices)
-class Skeleton:
+# SkeletonTemp(window, vertices, thickness)
+class SkeletonTemp(object):
 
     def __init__(self, window, vertices, thickness=20):
         self.thickness = thickness
@@ -115,3 +117,49 @@ class Skeleton:
                                           )
                 self._shapeList.append(circleEnd)
                 vertex += 1
+
+# a node of a skeleton data structure
+# SkeletonNode(position, connections)
+class SkeletonNode(object):
+
+    def __init__(self, position=(0, 0), connections=[]):
+        self.position = position
+        self.connections = connections
+
+# a shape stimulus
+# SkeletonStim(window, root, thickness)
+class SkeletonStim(object):
+
+    def __init__(self, window, root, thickness=20):
+        self.window = window # window to be drawn on
+        self.root = root # root SkeletonNode
+        self.thickness = thickness # thickness of the lines
+
+        self._shapeList = [] # list of circles and rectangles that make up the shape
+        self._createShapeList(window=window)
+
+    def draw(self):
+        for i in range(len(self._shapeList)):
+            self._shapeList[i].draw()
+
+    def _createShapeList(self, window):
+        self._createShapeListHelper(window, self.root)
+
+    def _createShapeListHelper(self, window, current):
+        circle = visual.Circle(win=window,
+                               units="pix",
+                               radius=(self.thickness / 2),
+                               edges=32,
+                               fillColor="white",
+                               pos=current.position
+                               )
+        self._shapeList.append(circle)
+
+        for i in range(len(current.connections)):
+            rectangle = Rectangle(window=window,
+                                  p0=current.position,
+                                  p1=current.connections[i].position,
+                                  thickness=self.thickness
+                                  )
+            self._shapeList.append(rectangle)
+            self._createShapeListHelper(window, current.connections[i])
