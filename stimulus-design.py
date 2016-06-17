@@ -35,13 +35,12 @@ v4 = [(-200, 100), # horizontal stretched Z
                 # )
 
 # SkeletonStim testing
-node3 = SkeletonNode(position=(0, 100))
-node2 = SkeletonNode(position=(100, 0))
-node1 = SkeletonNode(position=(0, 0), connections=[node2, node3])
+node4 = SkeletonNode(position=(0, 250))
+node3 = SkeletonNode(position=(-100, 150), connections=[node4])
+node2 = SkeletonNode(position=(100, 100), connections=[node3])
+node1 = SkeletonNode(position=(0, 0), connections=[node2, node4])
 
-skel = SkeletonStim(window=mywin,
-                     root=node1
-                     )
+skel = SkeletonStim(window=mywin, root=node1, thickness=50)
 
 # -------------------------------------MAIN LOOP-----------------------------------------
 
