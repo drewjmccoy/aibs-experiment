@@ -6,11 +6,11 @@ from psychopy import visual, core, event
 from shapes import SkeletonNode, SkeletonStim
 
 # create a window
-win = visual.Window([800,800],
-                      monitor="testMonitor",
-                      units="deg")
+win = visual.Window(monitor="testMonitor",
+                    fullscr=True,
+                    units="deg")
 
-thickness = 10
+thickness=20
 
 def get_shape_list(window, thickness):
     # order 1
@@ -81,9 +81,44 @@ def get_shape_list(window, thickness):
 
     return [shape_0, shape_1, shape_2, shape_3, shape_4, shape_5, shape_6, shape_7, shape_8, shape_9]
 
-# show shapes
-shapes = get_shape_list(window=win, thickness=40)
-for shape in shapes:
-    shape.draw()
+# get shapes
+shapes = get_shape_list(window=win, thickness=thickness)
+
+# create dot stims
+dots = visual.DotStim(win=win,
+                       units='deg',
+                       coherence=0.5,
+                       fieldSize=(50,50),
+                       color=[-1],
+                       dotSize=thickness,
+                       dotLife=20,
+                       noiseDots='direction',
+                       signalDots='same',
+                       speed=0.01,
+                       nDots=500,
+                       fieldShape='circle',
+                       dir=90)
+
+# -------------------------------------MAIN LOOP-----------------------------------------
+
+# loop setup
+play = True
+frameN = 0
+
+while play:
+    shapes[frameN / 100 % 10].draw()
+    dots.draw()
     win.update()
-    core.wait(1)
+
+    # if a key is pressed, set play to False
+    if len(event.getKeys()) > 0:
+        play = False
+    event.clearEvents()
+
+    # increment frameN
+    frameN += 1
+# -----------------------------------END MAIN LOOP---------------------------------------
+
+# cleanup
+win.close()
+core.quit()
