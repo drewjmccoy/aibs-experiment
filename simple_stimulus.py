@@ -5,7 +5,7 @@
 """
 
 
-from psychopy import visual,logging,monitors,core,event,sound
+from psychopy import visual, logging, monitors, core, event
 from pyglet.window import key
 import socket
 import numpy as np
@@ -30,7 +30,7 @@ try:
 except Exception, e:
     print "No NI boards found.", e
 
-from StimulusBase import StimBase
+from stimulus_base import StimBase
 
 AGENT_IP = "127.0.0.1"
 AGENT_PORT = 1111

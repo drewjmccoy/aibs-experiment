@@ -1,6 +1,5 @@
 # @author Drew McCoy <drewm@alleninstitute.org>
 # main script for stimulus design
-# OUTDATED
 
 # imports
 from psychopy import visual, core, event
@@ -18,10 +17,10 @@ node2 = SkeletonNode(position=(100, 100), connections=[node3])
 node1 = SkeletonNode(position=(0, 0), connections=[node2, node4])
 node = SkeletonNode(position=(0, 0), connections=[node2])
 
-skel1 = SkeletonStim(window=mywin, root=node3)
-skel2 = SkeletonStim(window=mywin, root=node2)
-skel3 = SkeletonStim(window=mywin, root=node)
-skel4 = SkeletonStim(window=mywin, root=node1, thickness=10)
+skel1 = SkeletonStim(window=mywin, root=node3, shape_id=0)
+skel2 = SkeletonStim(window=mywin, root=node2, shape_id=0)
+skel3 = SkeletonStim(window=mywin, root=node, shape_id=0)
+skel4 = SkeletonStim(window=mywin, root=node1, shape_id=0, thickness=10)
 
 skel = skel4
 

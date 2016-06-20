@@ -68,12 +68,12 @@ class SkeletonTemp(object):
                                          vertices=self.vertices,
                                          closeShape=False
                                          )
-        self._shapeList = []
+        self._shape_list = []
         self._createShapeList(window=window)
 
     def draw(self):
-        for i in range(len(self._shapeList)):
-            self._shapeList[i].draw()
+        for i in range(len(self._shape_list)):
+            self._shape_list[i].draw()
 
     def _createShapeList(self, window):
         if len(self.vertices) > 0:
@@ -84,7 +84,7 @@ class SkeletonTemp(object):
                                    edges=32,
                                    fillColor="white",
                                    pos=self.vertices[0])
-            self._shapeList.append(circle)
+            self._shape_list.append(circle)
 
             # add rest of the 'fence'
             vertex = 1
@@ -94,7 +94,7 @@ class SkeletonTemp(object):
                 rectangle = Rectangle(window=window,
                                       p0=self.vertices[vertex - 1],
                                       p1=self.vertices[vertex])
-                self._shapeList.append(rectangle._rectangle)
+                self._shape_list.append(rectangle._rectangle)
 
                 # create end circle
                 circleEnd = visual.Circle(win=window,
@@ -103,7 +103,7 @@ class SkeletonTemp(object):
                                           edges=32,
                                           fillColor="white",
                                           pos=self.vertices[vertex])
-                self._shapeList.append(circleEnd)
+                self._shape_list.append(circleEnd)
                 vertex += 1
 
 # a node of a skeleton data structure
@@ -126,34 +126,34 @@ class SkeletonStim(object):
         self.thickness = thickness # thickness of the lines
 
         # list of circles and rectangles that make up the shape
-        self._shapeList = []
+        self._shape_list = []
 
         # build up shape list
-        self._buildShapeList(window=window)
+        self._build_shape_list(window=window)
 
     # draws the SkeletonStim on the window
     def draw(self):
-        for i in range(len(self._shapeList)):
-            self._shapeList[i].draw()
+        for i in range(len(self._shape_list)):
+            self._shape_list[i].draw()
 
     # builds up the shape list with circles and squares
-    def _buildShapeList(self, window):
-        self._buildShapeListHelper(window, self.root)
+    def _build_shape_list(self, window):
+        self._build_shape_listHelper(window, self.root)
 
     # helps build up shape list with recursion
-    def _buildShapeListHelper(self, window, current):
+    def _build_shape_listHelper(self, window, current):
         circle = visual.Circle(win=window,
                                units="pix",
                                radius=(self.thickness / 2),
                                edges=32,
                                fillColor="white",
                                pos=current.position)
-        self._shapeList.append(circle)
+        self._shape_list.append(circle)
 
         for i in range(len(current.connections)):
             rectangle = Rectangle(window=window,
                                   p0=current.position,
                                   p1=current.connections[i].position,
                                   thickness=self.thickness)
-            self._shapeList.append(rectangle)
-            self._buildShapeListHelper(window, current.connections[i])
+            self._shape_list.append(rectangle)
+            self._build_shape_listHelper(window, current.connections[i])

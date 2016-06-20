@@ -5,7 +5,7 @@
 """
 
 
-from psychopy import visual,logging,monitors,core,event#,sound
+from psychopy import visual, logging, monitors, core, event
 from pyglet.window import key
 import socket
 import numpy as np
