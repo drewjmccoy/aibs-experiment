@@ -9,6 +9,7 @@ import time
 import datetime
 import copy
 from stimulus_base import StimBase
+from math import floor, ceil
 
 
 class Stim(StimBase):
@@ -22,6 +23,7 @@ class Stim(StimBase):
         self.duration_on = duration_on
         self.duration_off = duration_off
         self.stimuli = self.get_shapes(window, thickness) + [self.get_dots(window, thickness)]
+        self.num_stimuli = len(self.stimuli)
         if random:
             shuffle(self.stimuli)
 
@@ -48,46 +50,79 @@ class Stim(StimBase):
 
         # ---------------------------------MAIN LOOP-------------------------------------
 
+        # session setup
         frame = 0
         stim_index = 0
+        interval_length = self.duration_on + self.duration_off
+        last_interval_time = 0
+        stim_id = 0 # TODO
+        stim_type = "shape" # TODO
 
         while self.active:
 
-            if frame % 60 is 0:
-                stim_index += 1
-            self.stimuli[stim_index % len(self.stimuli)].draw()
-            self.window.update()
+            # end session if time has expired
+            if self.timer is not None and self.timer.getTime() - self.starttime >= duration:
+                self.active = False
 
-            # if a key is pressed, set play to False
+            # end session if any key is pressed
             if len(event.getKeys()) > 0:
                 self.active = False
             event.clearEvents()
 
-            # increment frame
-            frame += 1
-
-
-            if self.timer is not None and self.timer.getTime() - self.starttime >= duration:
-                self.active = False
-
-            #If it's time to toggle the stimulus, convert True to False and vice-versa
-            if self.timer.getTime() >= self.next_stim_toggle:
-
-                self.show_stim ^= True
-                # reference into our durations tuple with the boolean
-                self.next_stim_toggle += self.durations[int(self.show_stim)]
-
-            #Log some stuff to stimuluslog to reconstruct later
-            self.stimuluslog.append({'time':self.timer.getTime(),'frame':self.vsynccount,'state':self.show_stim})
-
-
-            # Show clock for debugging purposes
+            # show clock for debugging purposes
             if self.show_clock == True:
                 self.display_clock(self.window)
+
+            # get and modularize the time for simplicity
+            time = self.timer.getTime()
+            interval_time = time % interval_length
+
+            # change stimuli at the top of the interval, reset opacity
+            if ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
+                stim_index += 1
+                stim_index %= self.num_stimuli
+                self.stimuli[stim_index].setOpacity(0)
+
+            self.stimuli[stim_index].changeOpacity(.05)
+
+            # show stimuli dependent on duration_on
+            if interval_time < self.duration_on:
+                self.show_stim = True
+                self.stimuli[stim_index].draw()
+            else:
+                self.show_stim = False
+
+            self.window.update()
+
+
+            # If it's time to toggle the stimulus, convert True to False and vice-versa
+            # if self.timer.getTime() >= self.next_stim_toggle:
+            #
+            #     # ?
+            #     # self.show_stim ^= True
+            #     self.show_stim = not self.show_stim
+            #     # reference into our durations tuple with the boolean
+            #     # self.next_stim_toggle += self.durations[int(self.show_stim)]
+
+            # log variables
+            self.stimuluslog.append({'time':time,
+                                    'frame':frame,
+                                    'stimuli shown':self.show_stim,
+                                    'stimuli_id':stim_id,
+                                    'stimuli_type':stim_type})
+
+            # update variables
+            frame += 1
+            # ?
+            self.vsynccount += 1
+            last_interval_time = interval_time
+
+
         # -------------------------------END MAIN LOOP-----------------------------------
 
         # cleanup
-        win.close()
+        print self.stimuluslog
+        self.window.close()
         core.quit()
 
     def get_shapes(self, window, thickness):
@@ -170,16 +205,16 @@ class Stim(StimBase):
                                noiseDots='direction',
                                signalDots='same',
                                speed=0.01,
-                               nDots=500,
+                               nDots=200,
                                fieldShape='circle',
                                dir=90)
 
 if __name__ == "__main__":
     # PARAMETERS GO HERE
     thickness = 20
-    duration_on = 2
-    duration_off = 4
-    random = True
+    duration_on = 1
+    duration_off = 1
+    random = False
 
     mon = monitors.Monitor('testMonitor')#fetch the most recent calib for this monitor
     mon.setDistance(15)
@@ -194,7 +229,7 @@ if __name__ == "__main__":
                 duration_off=duration_off,
                 random=random)
 
-    stim.run(duration= 10*60)
+    stim.run(duration=5*60)
 
     print ""
     print "min frame interval:",np.min(stim.vsyncintervals)

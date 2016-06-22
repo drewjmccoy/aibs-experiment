@@ -31,9 +31,14 @@ class SkeletonStim(object):
                                           height=thickness,
                                           pos=self._getPosition(p0, p1),
                                           ori=self._getOrientation(p0, p1))
+            self.opacity = 1.0
 
         def draw(self):
             self._rectangle.draw()
+
+        def setOpacity(self, newOpacity):
+            self._rectangle.setOpacity(newOpacity=newOpacity)
+            self.opacity = newOpacity
 
         # returns the width of the Rectangle
         def _getWidth(self, p0, p1):
@@ -86,6 +91,14 @@ class SkeletonStim(object):
     def draw(self):
         for i in range(len(self._shape_list)):
             self._shape_list[i].draw()
+
+    def changeOpacity(self, change):
+        for shape in self._shape_list:
+            shape.setOpacity(shape.opacity + change)
+
+    def setOpacity(self, newOpacity):
+        for shape in self._shape_list:
+            shape.setOpacity(newOpacity)
 
     # builds up the shape list with circles and squares
     def _build_shape_list(self, window):
