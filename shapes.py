@@ -75,11 +75,12 @@ class SkeletonStim(object):
             return deg
 
     # initializes stimulus
-    def __init__(self, window, root, shape_id, thickness=20):
+    def __init__(self, window, root, stimulus_id, thickness=20):
         self.window = window # window to be drawn on
         self.root = root # root SkeletonNode
-        self.id = shape_id # id of the
+        self.stimulus_id = stimulus_id # id of the
         self.thickness = thickness # thickness of the lines
+        self.stimulus_type = "shape"
 
         # list of circles and rectangles that make up the shape
         self._shape_list = []
@@ -121,3 +122,29 @@ class SkeletonStim(object):
                                   thickness=self.thickness)
             self._shape_list.append(rectangle)
             self._build_shape_list_helper(window, current.connections[i])
+
+# a motion stimulus
+# MotionStim(self, window, units, coherence, fieldSize, color, dotSize, dotLife,
+#            noiseDots, signalDots, speed, nDots, fieldShape, dir, stimulus_id)
+class MotionStim:
+
+    def __init__(self, window, units, coherence, fieldSize, color, dotSize, dotLife,
+                 noiseDots, signalDots, speed, nDots, fieldShape, dir, stimulus_id):
+        self.dots = visual.DotStim(win=window,
+                                   units=units,
+                                   coherence=coherence,
+                                   fieldSize=fieldSize,
+                                   color=color,
+                                   dotSize=dotSize,
+                                   dotLife=dotLife,
+                                   noiseDots=noiseDots,
+                                   signalDots=signalDots,
+                                   speed=speed,
+                                   nDots=nDots,
+                                   fieldShape=fieldShape,
+                                   dir=dir)
+        self.stimulus_id = stimulus_id
+        self.stimulus_type = "motion"
+
+    def draw(self):
+        self.dots.draw()
