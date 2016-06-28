@@ -413,9 +413,9 @@ class StimBase(Publisher):
         """Checks key input"""
         for keys in event.getKeys(timeStamped=True):
             self.keylog.append({'eventlog':keys,'experiment_time:':self.timer.getTime()})
-            self.trialvars['response_type'].append((keys[0]))
-            self.trialvars['response_time'].append(self.timer.getTime())
-            self.responselog.append({'time':self.timer.getTime(),'frame':self.vsynccount,'type':keys[0]})
+            # self.trialvars['response_type'].append((keys[0]))
+            # self.trialvars['response_time'].append(self.timer.getTime())
+            # self.responselog.append({'time':self.timer.getTime(),'frame':self.vsynccount,'type':keys[0]})
             if keys[0] in ['t']:
                 print "current time in experiment is: ",self.timer.getTime()
             elif keys[0] in ['escape', 'q']:
@@ -527,6 +527,7 @@ class StimBase(Publisher):
             print "Error clearing timer task"
 
         #Stop eyetracker if it exists
+        print "STOPPING EYE TRACKER"
         if self.eyetracker:
             self.eyetracker.recordStop()
 
@@ -543,8 +544,11 @@ class StimBase(Publisher):
         self.stopdatetime = str(self.stopdatetime)
         #Delete Psychopy Objects because we don't want to have to worry about
         # users needing Psychopy to unpickle.  Maybe make them strings instead?
-        self.grating = str(self.grating)
-        self.blank = str(self.blank)
+        try:
+            self.grating = str(self.grating)
+            self.blank = str(self.blank)
+        except:
+            pass
 
 
         if self.syncsqr:

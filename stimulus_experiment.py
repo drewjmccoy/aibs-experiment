@@ -29,8 +29,11 @@ class Stim(StimBase):
             shuffle(self.stimuli)
 
         self.start_datetime = datetime.datetime.now()
-        self.mouse_id = 'test_stimulus_code'
+        self.mouseid = 'test_stimulus_code'
         self.show_clock = True
+
+        self.syncpulse = True
+        self.syncsqr = True
 
         self._IO_signal_setup()
 
@@ -92,7 +95,7 @@ class Stim(StimBase):
             else:
                 self.show_stim = False
 
-            self.window.update()
+            # self.window.update()
 
             # If it's time to toggle the stimulus, convert True to False and vice-versa
             # if self.timer.getTime() >= self.next_stim_toggle:
@@ -114,14 +117,23 @@ class Stim(StimBase):
             # update variables
             frame += 1
             # ?
-            self.vsynccount += 1
+            # self.vsynccount += 1
             last_interval_time = interval_time
+
+            self._checkLickSensor()
+            self._checkEncoder()
+            self._check_keys()
+            self._check_response()
+            self._flip()
+            self._checkUDP()
 
         # -------------------------------END MAIN LOOP-----------------------------------
 
         # cleanup
-        print self.stimuluslog
-        self.window.close()
+        print "SHUTTING DOWN"
+        self._finalize()
+        # print self.stimuluslog
+        # self.window.close()
         core.quit()
 
     def get_shapes(self, window, thickness):
