@@ -166,7 +166,7 @@ class MotionStim:
             self.dot.pos = self.position
 
     def __init__(self, window, n_dots=100, coherence=.5, field_size=(100, 100),
-                 dot_size=10, speed=1):
+                 dot_size=10, speed=1, stimulus_id=10):
         """Initializes the MotionStim."""
         self.window = window
         self.n_dots = n_dots
@@ -174,6 +174,8 @@ class MotionStim:
         self.field_size = field_size
         self.dot_size = dot_size
         self.speed = speed
+        self.stimulus_id = stimulus_id
+        self.stimulus_type = "motion"
         self.dots = self._get_dots()
 
     def draw(self):

@@ -1,7 +1,7 @@
 import sys
 sys.path.append(r'//aibsdata2/nc-ophys/Doug/Stimulus_Code')
 print sys.path
-from stimulus_experiment import Stim
+from stimulus import Stim
 from psychopy import visual,logging,monitors,core,event
 import numpy as np
 
@@ -22,12 +22,12 @@ def run_script(**kwargs):
         show_clock = False
 
         ## Put all parameters you'll want control over here:
-        dot_size = 45
+        dot_size = 46
         shape_thickness = 90
         shape_size = 1
         duration_on = 1
         duration_off = 1
-        random = False
+        random = True
 
         viewing_distance = 15 # cms from screen
 
@@ -86,11 +86,10 @@ def parse_serial_json(serial_json):
     import json
     return json.loads(serial_json)
 
-if __name__ == "__main__":
-    import sys
+import sys
 
-    if len(sys.argv) > 1:
-        json_kwargs = parse_serial_json(sys.argv[1])
-        run_script(**json_kwargs)
-    else:
-        run_script()
+if len(sys.argv) > 1:
+    json_kwargs = parse_serial_json(sys.argv[1])
+    run_script(**json_kwargs)
+else:
+    run_script()
