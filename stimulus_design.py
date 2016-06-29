@@ -3,7 +3,7 @@
 
 # imports
 from psychopy import visual, core, event
-from shapes import SkeletonNode, SkeletonStim
+from shapes import SkeletonNode, SkeletonStim, MotionStimTemp
 
 # create a window
 mywin = visual.Window([800,800],
@@ -24,6 +24,13 @@ skel4 = SkeletonStim(window=mywin, root=node1, stimulus_id=0, thickness=10)
 
 skel = skel4
 
+dot = MotionStimTemp(window=mywin,
+                     n_dots=1,
+                     coherence=1,
+                     field_size=(100, 100),
+                     dot_size=10,
+                     speed=1)
+
 # -------------------------------------MAIN LOOP-----------------------------------------
 
 # loop setup
@@ -33,7 +40,7 @@ frameN = 0
 while play:
 
     # draw stims
-    skel.draw()
+    dot.draw()
 
     # if a key is pressed, set play to False
     if len(event.getKeys()) > 0:

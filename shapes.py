@@ -148,3 +148,59 @@ class MotionStim:
 
     def draw(self):
         self.dots.draw()
+
+
+class MotionStimTemp:
+
+    class _Dot:
+
+        def __init__(self, window, radius, position, direction, speed, field_size):
+            self.window = window
+            self.radius = radius
+            self.position = position
+            self.direction = direction
+            self.speed = speed
+            self.dot = visual.Circle(win=window,
+                                     units="pix",
+                                     radius=self.radius,
+                                     edges=32,
+                                     fillColor="white",
+                                     pos=self.position)
+
+        def draw(self):
+            self.dot.draw()
+            self._update_position()
+
+        def _update_position(self):
+            pass
+
+    def __init__(self, window, n_dots, coherence, field_size, dot_size, speed):
+        self.window = window
+        self.n_dots = n_dots
+        self.coherence = coherence
+        self.field_size = field_size
+        self.dot_size = dot_size
+        self.speed = speed
+
+        self.dots = self._get_dots(window=self.window,
+                                   n_dots=self.n_dots,
+                                   field_size=self.field_size,
+                                   dot_size=self.dot_size,
+                                   speed=self.speed)
+
+    def draw(self):
+        for dot in self.dots:
+            dot.draw()
+
+    def _get_dots(self, window, n_dots, field_size, dot_size, speed):
+        result = []
+        for i in range(n_dots):
+            dot = self._Dot(window=window,
+                      radius=dot_size/2,
+                      position=(0,0), # randomize
+                      direction=0, # randomize
+                      speed=speed,
+                      field_size=field_size)
+            result.append(dot)
+
+        return result
