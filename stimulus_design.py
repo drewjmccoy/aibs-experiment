@@ -29,7 +29,7 @@ dot = MotionStim(window=mywin,
                  coherence=.9,
                  field_size=(400, 200),
                  dot_size=2,
-                 speed=5)
+                 speed=1)
 
 # -------------------------------------MAIN LOOP-----------------------------------------
 
