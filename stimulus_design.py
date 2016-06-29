@@ -3,7 +3,7 @@
 
 # imports
 from psychopy import visual, core, event
-from shapes import SkeletonNode, SkeletonStim, MotionStimTemp
+from shapes import SkeletonNode, SkeletonStim, MotionStim
 
 # create a window
 mywin = visual.Window([800,800],
@@ -24,12 +24,12 @@ skel4 = SkeletonStim(window=mywin, root=node1, stimulus_id=0, thickness=10)
 
 skel = skel4
 
-dot = MotionStimTemp(window=mywin,
-                     n_dots=1,
-                     coherence=1,
-                     field_size=(100, 100),
-                     dot_size=10,
-                     speed=1)
+dot = MotionStim(window=mywin,
+                 n_dots=100,
+                 coherence=.9,
+                 field_size=(400, 200),
+                 dot_size=2,
+                 speed=5)
 
 # -------------------------------------MAIN LOOP-----------------------------------------
 

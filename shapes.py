@@ -2,7 +2,7 @@
 # defines Rectangle, SkeletonNode, SkeletonStim
 
 from psychopy import visual
-import math
+import math, random
 
 # a node of a skeleton data structure
 # SkeletonNode(position, connections)
@@ -124,43 +124,19 @@ class SkeletonStim(object):
             self._build_shape_list_helper(window, current.connections[i])
 
 # a motion stimulus
-# MotionStim(self, window, units, coherence, fieldSize, color, dotSize, dotLife,
-#            noiseDots, signalDots, speed, nDots, fieldShape, dir, stimulus_id)
 class MotionStim:
-
-    def __init__(self, window, units, coherence, fieldSize, color, dotSize, dotLife,
-                 noiseDots, signalDots, speed, nDots, fieldShape, dir, stimulus_id):
-        self.dots = visual.DotStim(win=window,
-                                   units=units,
-                                   coherence=coherence,
-                                   fieldSize=fieldSize,
-                                   color=color,
-                                   dotSize=dotSize,
-                                   dotLife=dotLife,
-                                   noiseDots=noiseDots,
-                                   signalDots=signalDots,
-                                   speed=speed,
-                                   nDots=nDots,
-                                   fieldShape=fieldShape,
-                                   dir=dir)
-        self.stimulus_id = stimulus_id
-        self.stimulus_type = "motion"
-
-    def draw(self):
-        self.dots.draw()
-
-
-class MotionStimTemp:
 
     class _Dot:
 
-        def __init__(self, window, radius, position, direction, speed, field_size):
+        def __init__(self, window, radius, position, direction, speed, field_size, controlled):
             self.window = window
             self.radius = radius
             self.position = position
             self.direction = direction
             self.speed = speed
-            self.dot = visual.Circle(win=window,
+            self.field_size = field_size
+            self.controlled = controlled
+            self.dot = visual.Circle(win=self.window,
                                      units="pix",
                                      radius=self.radius,
                                      edges=32,
@@ -172,7 +148,24 @@ class MotionStimTemp:
             self._update_position()
 
         def _update_position(self):
-            pass
+            x = self.position[0]
+            y = self.position[1]
+            if math.fabs(int(x)) >= self.field_size[0] or math.fabs(int(y)) >= self.field_size[1]:
+                x = random.randint(-self.field_size[0] + 1, self.field_size[0] - 1)
+                if self.controlled:
+                    y = -self.field_size[1] + 1
+                else:
+                    self.direction = random.randint(0, 359)
+                    y = random.randint(-self.field_size[1] + 1, self.field_size[1] - 1)
+                self.position = (x, y)
+            else:
+                dx = self.speed * math.cos(math.radians(self.direction))
+                dy = self.speed * math.sin(math.radians(self.direction))
+                self.position = (x + dx, y + dy)
+            self.dot.pos = self.position
+
+        def _get_random_position(self):
+            return (x, y)
 
     def __init__(self, window, n_dots, coherence, field_size, dot_size, speed):
         self.window = window
@@ -181,26 +174,32 @@ class MotionStimTemp:
         self.field_size = field_size
         self.dot_size = dot_size
         self.speed = speed
-
-        self.dots = self._get_dots(window=self.window,
-                                   n_dots=self.n_dots,
-                                   field_size=self.field_size,
-                                   dot_size=self.dot_size,
-                                   speed=self.speed)
+        self.dots = self._get_dots()
 
     def draw(self):
         for dot in self.dots:
             dot.draw()
 
-    def _get_dots(self, window, n_dots, field_size, dot_size, speed):
+    def _get_dots(self):
         result = []
-        for i in range(n_dots):
-            dot = self._Dot(window=window,
-                      radius=dot_size/2,
-                      position=(0,0), # randomize
-                      direction=0, # randomize
-                      speed=speed,
-                      field_size=field_size)
+        for i in range(self.n_dots):
+            direction = random.randint(0, 359)
+            x = random.randint(-self.field_size[0] + 1, self.field_size[0] - 1)
+            y = random.randint(-self.field_size[1] + 1, self.field_size[1] - 1)
+            controlled = False
+            if i < self.coherence * self.n_dots:
+                controlled = True
+                direction = 90
+            dot = self._Dot(window=self.window,
+                      radius=self.dot_size / 2,
+                      position=(x, y),
+                      direction=direction,
+                      speed=self.speed,
+                      field_size=self.field_size,
+                      controlled=controlled)
             result.append(dot)
 
         return result
+
+if __name__ == "__main__":
+    import stimulus_design
