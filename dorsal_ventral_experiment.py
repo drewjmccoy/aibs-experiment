@@ -24,9 +24,11 @@ def run_script(**kwargs):
         ## Put all parameters you'll want control over here:
         dot_size = 46
         shape_thickness = 90
-        shape_size = 1
-        duration_on = 1
-        duration_off = 1
+        field_size = (500, 400)
+
+        duration_on = 2
+        duration_off = 0
+
         random = True
 
         viewing_distance = 15 # cms from screen
@@ -43,10 +45,10 @@ def run_script(**kwargs):
                 'eyetrackerIP':'W7DT710861',
                 'dot_size': dot_size,
                 'shape_thickness': shape_thickness,
-                'shape_size': shape_size,
                 'duration_on': duration_on,
                 'duration_off': duration_off,
-                'random':random}
+                'random':random,
+                'field_size':field_size}
 
         try:
             reformat_mouse_user(kwargs)
@@ -65,11 +67,11 @@ def run_script(**kwargs):
                     params=params,
                     dot_size = dot_size,
                     shape_thickness = shape_thickness,
-                    shape_size = shape_size,
                     duration_on=duration_on,
                     duration_off=duration_off,
-                    random=random)
-        stim.run(duration= Duration*60)
+                    random=random,
+                    field_size=field_size)
+        stim.run(duration=Duration*60)
 
         print ""
         print "===============Done==============="

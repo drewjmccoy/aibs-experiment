@@ -16,19 +16,19 @@ from math import floor, ceil
 class Stim(StimBase):
 
     def __init__(self, window, params, dot_size, shape_thickness,
-                 shape_size, duration_on, duration_off, random):
+                 duration_on, duration_off, random, field_size):
         super(Stim, self).__init__(window=window, params=params)
 
         self.params = copy.deepcopy(params)
         self.window = window
         self.dot_size = dot_size
         self.shape_thickness = shape_thickness
-        self.shape_size = shape_size
         self.duration_on = duration_on
         self.duration_off = duration_off
         self.random = random
-        self.shapes = self.get_shapes(window, shape_thickness, shape_size)
-        self.dots = self.get_dots(window, dot_size)
+        self.field_size = field_size
+        self.shapes = self.get_shapes(window, shape_thickness)
+        self.dots = self.get_dots(window, dot_size, field_size)
         self.stimuli =  self.shapes + self.dots
         self.num_stimuli = len(self.stimuli)
         if self.random:
@@ -142,7 +142,7 @@ class Stim(StimBase):
         # self.window.close()
         core.quit()
 
-    def get_shapes(self, window, shape_thickness, shape_size):
+    def get_shapes(self, window, shape_thickness):
         result = []
 
         # order 1
@@ -223,13 +223,13 @@ class Stim(StimBase):
 
         return result
 
-    def get_dots(self, window, dot_size):
+    def get_dots(self, window, dot_size, field_size):
         result =[]
 
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=0,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=5,
                             stimulus_id=10)
@@ -238,7 +238,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=0,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=5,
                             stimulus_id=11)
@@ -247,7 +247,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.5,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=5,
                             stimulus_id=12)
@@ -256,7 +256,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.5,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=5,
                             stimulus_id=13)
@@ -265,7 +265,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.9,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=5,
                             stimulus_id=14)
@@ -274,7 +274,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=0,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=10,
                             stimulus_id=15)
@@ -283,7 +283,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=0,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=10,
                             stimulus_id=16)
@@ -292,7 +292,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.5,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=10,
                             stimulus_id=17)
@@ -301,7 +301,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.5,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=10,
                             stimulus_id=18)
@@ -310,7 +310,7 @@ class Stim(StimBase):
         dots = MotionStim(window=window,
                             n_dots=50,
                             coherence=.9,
-                            field_size=(500, 400),
+                            field_size=field_size,
                             dot_size=dot_size,
                             speed=10,
                             stimulus_id=19)
