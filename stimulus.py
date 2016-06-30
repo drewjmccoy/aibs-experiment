@@ -88,29 +88,17 @@ class Stim(StimBase):
             if ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
                 stim_index += 1
                 stim_index %= self.num_stimuli
-                # self.stimuli[stim_index].setOpacity(0)
 
-            stim_id = self.stimuli[stim_index].stimulus_id
-            stim_type = self.stimuli[stim_index].stimulus_type
-            # self.stimuli[stim_index].changeOpacity(.005)
+            stimulus = self.stimuli[stim_index]
+            stim_id = stimulus.stimulus_id
+            stim_type = stimulus.stimulus_type
 
             # show stimuli dependent on duration_on
             if interval_time < self.duration_on:
                 self.show_stim = True
-                self.stimuli[stim_index].draw()
+                stimulus.draw()
             else:
                 self.show_stim = False
-
-            # self.window.update()
-
-            # If it's time to toggle the stimulus, convert True to False and vice-versa
-            # if self.timer.getTime() >= self.next_stim_toggle:
-            #
-            #     # ?
-            #     # self.show_stim ^= True
-            #     self.show_stim = not self.show_stim
-                # reference into our durations tuple with the boolean
-                # self.next_stim_toggle += self.durations[int(self.show_stim)]
 
             # log variables
             # TODO opasity/contrast
@@ -122,8 +110,6 @@ class Stim(StimBase):
 
             # update variables
             frame += 1
-            # ?
-            # self.vsynccount += 1
             last_interval_time = interval_time
 
             self._checkLickSensor()
@@ -138,8 +124,6 @@ class Stim(StimBase):
         # cleanup
         print "SHUTTING DOWN"
         self._finalize()
-        # print self.stimuluslog
-        # self.window.close()
         core.quit()
 
     def get_shapes(self, window, shape_thickness):

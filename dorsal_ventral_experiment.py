@@ -26,8 +26,8 @@ def run_script(**kwargs):
         shape_thickness = 90
         field_size = (500, 400)
 
-        duration_on = 2
-        duration_off = 0
+        duration_on = 4
+        duration_off = 2
 
         random = True
 
