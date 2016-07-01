@@ -1,6 +1,7 @@
 """@author Drew McCoy <drewm@alleninstitute.org>
 Defines Rectangle, SkeletonNode, SkeletonStim
 """
+# TODO makes everything black
 
 from psychopy import visual
 import math, random
@@ -124,19 +125,17 @@ class MotionStim:
         def __init__(self, window, radius=5, position=(0, 0), direction=0, speed=1,
                      field_size=(100, 100), controlled=False):
             """Initializes the dot."""
-            self.window = window
-            self.radius = radius
             self.position = position
             self.direction = direction
             self.speed = speed
             self.field_size = field_size
             self.controlled = controlled
-            self.dot = visual.Circle(win=self.window,
+            self.dot = visual.Circle(win=window,
                                      units="pix",
-                                     radius=self.radius,
+                                     radius=radius,
                                      edges=32,
                                      fillColor="white",
-                                     pos=self.position)
+                                     pos=position)
 
         def draw(self):
             """Draws the dot on the window."""
@@ -208,4 +207,4 @@ class MotionStim:
         return result
 
 if __name__ == "__main__":
-    import stimulus_design
+    import dorsal_ventral_experiment

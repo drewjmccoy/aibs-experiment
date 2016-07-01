@@ -2,6 +2,7 @@
 Setting up stimuli for experiment
 """
 # TODO mess with contrast
+# TODO implement Shawn's interval changes
 
 from psychopy import visual, core, event, monitors
 from shapes import SkeletonNode, SkeletonStim, MotionStim
@@ -29,7 +30,7 @@ class Stim(StimBase):
         self.field_size = field_size
         self.shapes = self.get_shapes(window, shape_thickness)
         self.dots = self.get_dots(window, dot_size, field_size)
-        self.stimuli =  self.shapes + self.dots
+        self.stimuli =  self.dots
         self.num_stimuli = len(self.stimuli)
         if self.random:
             shuffle(self.stimuli)
@@ -211,7 +212,7 @@ class Stim(StimBase):
         result =[]
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -220,7 +221,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -229,7 +230,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -238,7 +239,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -247,7 +248,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.9,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -256,7 +257,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -265,7 +266,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -274,7 +275,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -283,7 +284,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -292,7 +293,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=50,
+                            n_dots=25,
                             coherence=.9,
                             field_size=field_size,
                             dot_size=dot_size,

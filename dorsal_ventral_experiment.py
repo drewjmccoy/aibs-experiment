@@ -26,10 +26,10 @@ def run_script(**kwargs):
         shape_thickness = 90
         field_size = (500, 400)
 
-        duration_on = 4
-        duration_off = 2
+        duration_on = 1
+        duration_off = 1
 
-        random = True
+        random = False
 
         viewing_distance = 15 # cms from screen
 
