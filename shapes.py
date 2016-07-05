@@ -28,7 +28,8 @@ class SkeletonStim(object):
 
             self._rectangle = visual.Rect(win=window,
                                           units="pix",
-                                          fillColor="white",
+                                          fillColor="black",
+                                          lineColor="black",
                                           width=self._getWidth(p0, p1),
                                           height=thickness,
                                           pos=self._getPosition(p0, p1),
@@ -104,7 +105,8 @@ class SkeletonStim(object):
                                units="pix",
                                radius=(self.thickness / 2),
                                edges=32,
-                               fillColor="white",
+                               fillColor="black",
+                               lineColor="black",
                                pos=current.position)
         self._shape_list.append(circle)
 
@@ -134,7 +136,8 @@ class MotionStim:
                                      units="pix",
                                      radius=radius,
                                      edges=32,
-                                     fillColor="white",
+                                     fillColor="black",
+                                     lineColor="black",
                                      pos=position)
 
         def draw(self):
