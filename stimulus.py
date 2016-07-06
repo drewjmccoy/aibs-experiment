@@ -17,7 +17,7 @@ from math import floor, ceil
 class Stim(StimBase):
 
     def __init__(self, window, params, dot_size, num_dots, shape_thickness,
-                 duration_on, duration_off, random, field_size, repititions,
+                 duration_on, duration_off, random, field_size, repetitions,
                  gray_periods, show_clock):
         super(Stim, self).__init__(window=window, params=params)
 
@@ -31,7 +31,7 @@ class Stim(StimBase):
         self.random = random
         self.field_size = field_size
         self.show_clock = show_clock
-        self.repititions = repititions
+        self.repetitions = repetitions
         self.gray_period = False
         self.shapes = self.get_shapes(window, shape_thickness)
         self.dots = self.get_dots(window, dot_size, field_size, num_dots)
@@ -72,7 +72,7 @@ class Stim(StimBase):
         interval_length = self.duration_on + self.duration_off
         last_interval_time = 0
         stim_set = self.shapes
-        repitition = 0
+        repetition = 0
         gray_index = 0
 
         while self.active:
@@ -102,14 +102,14 @@ class Stim(StimBase):
                     stim_index += 1
                     stim_index %= len(stim_set)
                     if stim_index == 0:
-                        repitition += 1
+                        repetition += 1
 
             stimulus = stim_set[stim_index]
             stim_id = stimulus.stimulus_id
             stim_type = stimulus.stimulus_type
 
             # show stimuli dependent on duration_on
-            if repitition < self.repititions:
+            if repetition < self.repetitions:
                 self.gray_period = False
                 if interval_time < self.duration_on:
                     self.show_stim = True
@@ -120,7 +120,7 @@ class Stim(StimBase):
                 self.gray_period = True
                 self.show_stim = False
                 if gray_index >= self.gray_periods:
-                    repitition = 0
+                    repetition = 0
                     gray_index = 0
                     if stim_set is self.shapes:
                         stim_set = self.dots
@@ -131,7 +131,7 @@ class Stim(StimBase):
             # log variables
             self.stimuluslog.append({'time':time,
                                     'frame':frame,
-                                    'repitition': repitition,
+                                    'repetition': repetition,
                                     'stimuli shown':self.show_stim,
                                     'stimuli_id':stim_id,
                                     'stimuli_type':stim_type,

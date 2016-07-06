@@ -27,7 +27,7 @@ def run_script(**kwargs):
         shape_thickness = 90
         field_size = (600, 500)
         gray_periods = 1 # * (duration_on + duration_off) seconds
-        repititions = 2
+        repetitions = 2
 
         duration_on = 1
         duration_off = 1
@@ -53,7 +53,7 @@ def run_script(**kwargs):
                 'duration_off': duration_off,
                 'random':random,
                 'field_size':field_size,
-                'repititions':repititions,
+                'repetitions':repetitions,
                 'gray_periods': gray_periods}
 
         try:
@@ -78,7 +78,7 @@ def run_script(**kwargs):
                     duration_off=duration_off,
                     random=random,
                     field_size=field_size,
-                    repititions=repititions,
+                    repetitions=repetitions,
                     gray_periods=gray_periods,
                     show_clock=show_clock)
 
