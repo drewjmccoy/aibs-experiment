@@ -23,12 +23,14 @@ def run_script(**kwargs):
 
         ## Put all parameters you'll want control over here:
         dot_size = 46
+        num_dots = 2
         shape_thickness = 90
-        field_size = (500, 400)
-        gray_periods = 5 # * (duration_on + duration_off) seconds
+        field_size = (600, 500)
+        gray_periods = 1 # * (duration_on + duration_off) seconds
+        repititions = 2
 
-        duration_on = 4
-        duration_off = 2
+        duration_on = 1
+        duration_off = 1
 
         random = True
 
@@ -45,11 +47,13 @@ def run_script(**kwargs):
                 'eyetracker':True,
                 'eyetrackerIP':'W7DT710861',
                 'dot_size': dot_size,
+                'num_dots': num_dots,
                 'shape_thickness': shape_thickness,
                 'duration_on': duration_on,
                 'duration_off': duration_off,
                 'random':random,
                 'field_size':field_size,
+                'repititions':repititions,
                 'gray_periods': gray_periods}
 
         try:
@@ -67,12 +71,14 @@ def run_script(**kwargs):
 
         stim = Stim(window=window,
                     params=params,
-                    dot_size = dot_size,
-                    shape_thickness = shape_thickness,
+                    dot_size=dot_size,
+                    num_dots=num_dots,
+                    shape_thickness=shape_thickness,
                     duration_on=duration_on,
                     duration_off=duration_off,
                     random=random,
                     field_size=field_size,
+                    repititions=repititions,
                     gray_periods=gray_periods,
                     show_clock=show_clock)
 

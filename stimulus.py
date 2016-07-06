@@ -16,22 +16,25 @@ from math import floor, ceil
 
 class Stim(StimBase):
 
-    def __init__(self, window, params, dot_size, shape_thickness,
-                 duration_on, duration_off, random, field_size, gray_periods, show_clock):
+    def __init__(self, window, params, dot_size, num_dots, shape_thickness,
+                 duration_on, duration_off, random, field_size, repititions,
+                 gray_periods, show_clock):
         super(Stim, self).__init__(window=window, params=params)
 
         self.params = copy.deepcopy(params)
         self.window = window
         self.dot_size = dot_size
+        self.num_dots = num_dots
         self.shape_thickness = shape_thickness
         self.duration_on = duration_on
         self.duration_off = duration_off
         self.random = random
         self.field_size = field_size
         self.show_clock = show_clock
+        self.repititions = repititions
         self.gray_period = False
         self.shapes = self.get_shapes(window, shape_thickness)
-        self.dots = self.get_dots(window, dot_size, field_size)
+        self.dots = self.get_dots(window, dot_size, field_size, num_dots)
         self.gray_periods = gray_periods
         self.stimuli =  self.dots + self.shapes
         if self.random:
@@ -69,8 +72,7 @@ class Stim(StimBase):
         interval_length = self.duration_on + self.duration_off
         last_interval_time = 0
         stim_set = self.shapes
-        rep = 0
-        repititions = 1
+        repitition = 0
         gray_index = 0
 
         while self.active:
@@ -100,14 +102,14 @@ class Stim(StimBase):
                     stim_index += 1
                     stim_index %= len(stim_set)
                     if stim_index == 0:
-                        rep += 1
+                        repitition += 1
 
             stimulus = stim_set[stim_index]
             stim_id = stimulus.stimulus_id
             stim_type = stimulus.stimulus_type
 
             # show stimuli dependent on duration_on
-            if rep < repititions:
+            if repitition < self.repititions:
                 self.gray_period = False
                 if interval_time < self.duration_on:
                     self.show_stim = True
@@ -118,7 +120,7 @@ class Stim(StimBase):
                 self.gray_period = True
                 self.show_stim = False
                 if gray_index >= self.gray_periods:
-                    rep = 0
+                    repitition = 0
                     gray_index = 0
                     if stim_set is self.shapes:
                         stim_set = self.dots
@@ -129,6 +131,7 @@ class Stim(StimBase):
             # log variables
             self.stimuluslog.append({'time':time,
                                     'frame':frame,
+                                    'repitition': repitition,
                                     'stimuli shown':self.show_stim,
                                     'stimuli_id':stim_id,
                                     'stimuli_type':stim_type,
@@ -233,11 +236,11 @@ class Stim(StimBase):
 
         return result
 
-    def get_dots(self, window, dot_size, field_size):
+    def get_dots(self, window, dot_size, field_size, num_dots):
         result =[]
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -246,7 +249,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -255,7 +258,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -264,7 +267,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -273,7 +276,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.9,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -282,7 +285,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -291,7 +294,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=0,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -300,7 +303,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -309,7 +312,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.5,
                             field_size=field_size,
                             dot_size=dot_size,
@@ -318,7 +321,7 @@ class Stim(StimBase):
         result.append(dots)
 
         dots = MotionStim(window=window,
-                            n_dots=25,
+                            n_dots=num_dots,
                             coherence=.9,
                             field_size=field_size,
                             dot_size=dot_size,
