@@ -17,7 +17,7 @@ from math import floor, ceil
 class Stim(StimBase):
 
     def __init__(self, window, params, dot_size, shape_thickness,
-                 duration_on, duration_off, random, field_size):
+                 duration_on, duration_off, random, field_size, gray_periods, show_clock):
         super(Stim, self).__init__(window=window, params=params)
 
         self.params = copy.deepcopy(params)
@@ -28,16 +28,19 @@ class Stim(StimBase):
         self.duration_off = duration_off
         self.random = random
         self.field_size = field_size
+        self.show_clock = show_clock
+        self.gray_period = False
         self.shapes = self.get_shapes(window, shape_thickness)
         self.dots = self.get_dots(window, dot_size, field_size)
-        self.stimuli =  self.dots
-        self.num_stimuli = len(self.stimuli)
+        self.gray_periods = gray_periods
+        self.stimuli =  self.dots + self.shapes
         if self.random:
+            shuffle(self.shapes)
+            shuffle(self.dots)
             shuffle(self.stimuli)
 
         self.start_datetime = datetime.datetime.now()
         self.mouseid = 'test_stimulus_code'
-        self.show_clock = True
 
         self.syncpulse = True
         self.syncsqr = True
@@ -65,6 +68,10 @@ class Stim(StimBase):
         stim_index = 0
         interval_length = self.duration_on + self.duration_off
         last_interval_time = 0
+        stim_set = self.shapes
+        rep = 0
+        repititions = 1
+        gray_index = 0
 
         while self.active:
 
@@ -87,27 +94,45 @@ class Stim(StimBase):
 
             # change stimuli at the top of the interval, reset opacity
             if ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
-                stim_index += 1
-                stim_index %= self.num_stimuli
+                if self.gray_period:
+                    gray_index += 1
+                else:
+                    stim_index += 1
+                    stim_index %= len(stim_set)
+                    if stim_index == 0:
+                        rep += 1
 
-            stimulus = self.stimuli[stim_index]
+            stimulus = stim_set[stim_index]
             stim_id = stimulus.stimulus_id
             stim_type = stimulus.stimulus_type
 
             # show stimuli dependent on duration_on
-            if interval_time < self.duration_on:
-                self.show_stim = True
-                stimulus.draw()
+            if rep < repititions:
+                self.gray_period = False
+                if interval_time < self.duration_on:
+                    self.show_stim = True
+                    stimulus.draw()
+                else:
+                    self.show_stim = False
             else:
+                self.gray_period = True
                 self.show_stim = False
+                if gray_index >= self.gray_periods:
+                    rep = 0
+                    gray_index = 0
+                    if stim_set is self.shapes:
+                        stim_set = self.dots
+                    else:
+                        stim_set = self.shapes
+
 
             # log variables
-            # TODO opasity/contrast
             self.stimuluslog.append({'time':time,
                                     'frame':frame,
                                     'stimuli shown':self.show_stim,
                                     'stimuli_id':stim_id,
-                                    'stimuli_type':stim_type})
+                                    'stimuli_type':stim_type,
+                                    'gray_period': self.gray_period})
 
             # update variables
             frame += 1
@@ -301,6 +326,12 @@ class Stim(StimBase):
                             stimulus_id=19)
         result.append(dots)
 
+        return result
+
+    def get_gray_periods(self, n):
+        result = []
+        for i in range(n):
+            result.append(0)
         return result
 
 if __name__ == "__main__":

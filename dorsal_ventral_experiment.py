@@ -12,24 +12,25 @@ def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO M
 
 def run_script(**kwargs):
 
-        Duration = 10 # minutes
+        Duration = 30 # minutes
         monitor_name = 'testMonitor'
         # monitor_name = 'GammaCorrect30'
 
         mouseid = 'testmouse'
         # mouseid = 'testmouse'
 
-        show_clock = False
+        show_clock = True
 
         ## Put all parameters you'll want control over here:
         dot_size = 46
         shape_thickness = 90
         field_size = (500, 400)
+        gray_periods = 5 # * (duration_on + duration_off) seconds
 
-        duration_on = 1
-        duration_off = 1
+        duration_on = 4
+        duration_off = 2
 
-        random = False
+        random = True
 
         viewing_distance = 15 # cms from screen
 
@@ -48,7 +49,8 @@ def run_script(**kwargs):
                 'duration_on': duration_on,
                 'duration_off': duration_off,
                 'random':random,
-                'field_size':field_size}
+                'field_size':field_size,
+                'gray_periods': gray_periods}
 
         try:
             reformat_mouse_user(kwargs)
@@ -70,7 +72,10 @@ def run_script(**kwargs):
                     duration_on=duration_on,
                     duration_off=duration_off,
                     random=random,
-                    field_size=field_size)
+                    field_size=field_size,
+                    gray_periods=gray_periods,
+                    show_clock=show_clock)
+
         stim.run(duration=Duration*60)
 
         print ""
