@@ -23,14 +23,14 @@ def run_script(**kwargs):
 
         ## Put all parameters you'll want control over here:
         dot_size = 46
-        num_dots = 2
+        num_dots = 20
         shape_thickness = 90
         field_size = (600, 500)
-        gray_periods = 1 # * (duration_on + duration_off) seconds
+        gray_periods = 5 # * (duration_on + duration_off) seconds
         repetitions = 2
 
-        duration_on = 1
-        duration_off = 1
+        duration_on = 4
+        duration_off = 2
 
         random = True
 
