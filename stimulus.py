@@ -105,6 +105,8 @@ class Stim(StimBase):
                     stim_index %= len(stim_set)
                     if stim_index == 0:
                         repetition += 1
+                        if self.random:
+                            shuffle(stim_set)
 
             stimulus = stim_set[stim_index]
             stim_id = stimulus.stimulus_id
