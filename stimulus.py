@@ -13,6 +13,9 @@ import copy
 from stimulus_base import StimBase
 from math import floor, ceil
 
+import pylab
+from memory_util import total_size
+
 
 class Stim(StimBase):
 
@@ -32,7 +35,6 @@ class Stim(StimBase):
         self.field_size = field_size
         self.show_clock = show_clock
         self.repetitions = repetitions
-        self.gray_period = False
         self.shapes = self.get_shapes(window, shape_thickness)
         self.dots = self.get_dots(window, dot_size, field_size, num_dots)
         self.gray_periods = gray_periods
@@ -61,8 +63,6 @@ class Stim(StimBase):
             self.eyetracker.recordStart()
 
         #Let's start with the stimulus off
-        self.show_stim = False
-        self.next_stim_toggle = self.duration_off
 
         # ---------------------------------MAIN LOOP-------------------------------------
 
@@ -74,6 +74,8 @@ class Stim(StimBase):
         stim_set = self.shapes
         repetition = 0
         gray_index = 0
+        show_stim = False
+        gray_period = False
 
         while self.active:
 
@@ -96,7 +98,7 @@ class Stim(StimBase):
 
             # change stimuli at the top of the interval, reset opacity
             if ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
-                if self.gray_period:
+                if gray_period:
                     gray_index += 1
                 else:
                     stim_index += 1
@@ -110,15 +112,15 @@ class Stim(StimBase):
 
             # show stimuli dependent on duration_on
             if repetition < self.repetitions:
-                self.gray_period = False
+                gray_period = False
                 if interval_time < self.duration_on:
-                    self.show_stim = True
+                    show_stim = True
                     stimulus.draw()
                 else:
-                    self.show_stim = False
+                    show_stim = False
             else:
-                self.gray_period = True
-                self.show_stim = False
+                gray_period = True
+                show_stim = False
                 if gray_index >= self.gray_periods:
                     repetition = 0
                     gray_index = 0
@@ -127,15 +129,14 @@ class Stim(StimBase):
                     else:
                         stim_set = self.shapes
 
-
             # log variables
             self.stimuluslog.append({'time':time,
                                     'frame':frame,
                                     'repetition': repetition,
-                                    'stimuli shown':self.show_stim,
+                                    'stimuli shown':show_stim,
                                     'stimuli_id':stim_id,
                                     'stimuli_type':stim_type,
-                                    'gray_period': self.gray_period})
+                                    'gray_period': gray_period})
 
             # update variables
             frame += 1
@@ -152,6 +153,7 @@ class Stim(StimBase):
 
         # cleanup
         print "SHUTTING DOWN"
+        print total_size(self.stimuluslog)
         self._finalize()
         core.quit()
 
