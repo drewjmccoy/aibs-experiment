@@ -12,16 +12,16 @@ def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO M
 
 def run_script(**kwargs):
 
-        Duration = 30 # minutes
+        Duration = 60 # minutes
         monitor_name = 'testMonitor'
         # monitor_name = 'GammaCorrect30'
 
         mouseid = 'testmouse'
-        # mouseid = 'testmouse'
 
-        show_clock = True
+        show_clock = False # memory leaks when True
 
-        ## Put all parameters you'll want control over here:
+        # TODO change file directory for pkl
+        
         dot_size = 46
         num_dots = 20
         shape_thickness = 90
@@ -62,9 +62,8 @@ def run_script(**kwargs):
             pass
         params.update(kwargs) # UPDATE THE PARAMS DICTIONARY WITH THE VALUES PASSED TO THE FUNCTION VIA KWARGS
 
-        mon = monitors.Monitor(monitor_name)# fetch the most recent calib for this monitor
+        mon = monitors.Monitor(monitor_name) # fetch the most recent calib for this monitor
         mon.setDistance(viewing_distance)
-        # window = visual.Window(monitor=mon, units="deg",fullscr = False,size=(100, 100),screen =0,allowGUI=False,winType='pyglet')
         window = visual.Window(monitor=mon, units="deg",fullscr = True,size=(500, 500),screen =0,allowGUI=False,winType='pyglet')
 
         window.setMouseVisible(False)

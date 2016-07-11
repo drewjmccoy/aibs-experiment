@@ -108,16 +108,16 @@ class Stim(StimBase):
                         if self.random:
                             shuffle(stim_set)
 
-            stimulus = stim_set[stim_index]
-            stim_id = stimulus.stimulus_id
-            stim_type = stimulus.stimulus_type
+            # stimulus = stim_set[stim_index]
+            # stim_id = stimulus.stimulus_id
+            # stim_type = stimulus.stimulus_type
 
             # show stimuli dependent on duration_on
             if repetition < self.repetitions:
                 gray_period = False
                 if interval_time < self.duration_on:
                     show_stim = True
-                    stimulus.draw()
+                    stim_set[stim_index].draw()
                 else:
                     show_stim = False
             else:
@@ -131,25 +131,37 @@ class Stim(StimBase):
                     else:
                         stim_set = self.shapes
 
+            try:
+                last_frame_interval = self.window.frameIntervals[-1]
+            except:
+                last_frame_interval = 0.0
+
             # log variables
             self.stimuluslog.append({'time':time,
                                     'frame':frame,
                                     'repetition': repetition,
                                     'stimuli shown':show_stim,
-                                    'stimuli_id':stim_id,
-                                    'stimuli_type':stim_type,
-                                    'gray_period': gray_period})
+                                    'stimuli_id':stim_set[stim_index].stimulus_id,
+                                    'stimuli_type':stim_set[stim_index].stimulus_type,
+                                    'gray_period': gray_period,
+                                    'last_frame_interval': last_frame_interval})
 
             # update variables
             frame += 1
             last_interval_time = interval_time
 
-            self._checkLickSensor()
-            self._checkEncoder()
-            self._check_keys()
-            self._check_response()
-            self._flip()
-            self._checkUDP()
+            self.window.update()
+            # self._checkLickSensor()
+            # self._checkEncoder()
+            # self._check_keys()
+            # self._check_response()
+            # self._flip()
+            # self._checkUDP()
+
+            if len(self.window.frameIntervals) != 0:
+                if self.window.frameIntervals[-1] > .020:
+                    print "DROPPED FRAME"
+                    print str(self.window.frameIntervals[-1])
 
         # -------------------------------END MAIN LOOP-----------------------------------
 
