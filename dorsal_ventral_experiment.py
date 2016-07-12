@@ -12,7 +12,7 @@ def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO M
 
 def run_script(**kwargs):
 
-        Duration = 60 # minutes
+        Duration = 15 # minutes
         monitor_name = 'testMonitor'
         # monitor_name = 'GammaCorrect30'
 
@@ -21,13 +21,14 @@ def run_script(**kwargs):
         show_clock = False # memory leaks when True
 
         # TODO change file directory for pkl
-        
+
         dot_size = 46
         num_dots = 20
         shape_thickness = 90
         field_size = (600, 500)
-        gray_periods = 5 # * (duration_on + duration_off) seconds
-        repetitions = 2
+
+        gray_periods = 1 # * (duration_on + duration_off) seconds
+        repetitions = 4
 
         duration_on = 4
         duration_off = 2
