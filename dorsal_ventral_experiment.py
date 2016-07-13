@@ -80,7 +80,8 @@ def run_script(**kwargs):
                     field_size=field_size,
                     repetitions=repetitions,
                     gray_periods=gray_periods,
-                    show_clock=show_clock)
+                    show_clock=show_clock,
+                    mouseid=mouseid)
 
         stim.run(duration=Duration*60)
 

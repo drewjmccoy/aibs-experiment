@@ -18,7 +18,7 @@ class Stim(StimBase):
 
     def __init__(self, window, params, dot_size, num_dots, shape_thickness,
                  duration_on, duration_off, random, field_size, repetitions,
-                 gray_periods, show_clock):
+                 gray_periods, show_clock, mouseid="testmouse"):
         super(Stim, self).__init__(window=window, params=params)
 
         self.params = copy.deepcopy(params)
@@ -42,7 +42,7 @@ class Stim(StimBase):
             shuffle(self.stimuli)
 
         self.start_datetime = datetime.datetime.now()
-        self.mouseid = 'test_stimulus_code'
+        self.mouseid = mouseid
 
         self.syncpulse = True
         self.syncsqr = True
