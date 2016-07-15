@@ -16,7 +16,7 @@ def run_script(**kwargs):
         monitor_name = 'testMonitor'
         # monitor_name = 'GammaCorrect30'
 
-        mouseid = 'testmouse'
+        mouseid = 'testmouse' # TODO CHANGE BEFORE EXPERIMENT
 
         show_clock = False # memory leaks when True
 
@@ -28,10 +28,10 @@ def run_script(**kwargs):
         field_size = (600, 500)
 
         gray_periods = 1 # * (duration_on + duration_off) seconds
-        repetitions = 4
+        repetitions = 8
 
-        duration_on = 4
-        duration_off = 2
+        duration_on = 3
+        duration_off = 3
 
         random = True
 
