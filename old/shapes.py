@@ -1,6 +1,7 @@
 """@author Drew McCoy <drewm@alleninstitute.org>
 Defines Rectangle, SkeletonNode, SkeletonStim
 """
+# TODO makes everything black
 
 from psychopy import visual
 import math, random

@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'\\AIBSDATA2\nc-ophys\Doug\Drew_Summer_Project\Experiment5Code')
+sys.path.append(r'//aibsdata2/nc-ophys/Doug/Stimulus_Code')
 print sys.path
 from stimulus import Stim
 from psychopy import visual,logging,monitors,core,event
@@ -13,8 +13,8 @@ def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO M
 def run_script(**kwargs):
 
         Duration = 60 # minutes
-        # monitor_name = 'testMonitor'
-        monitor_name = 'GammaCorrect30'
+        monitor_name = 'testMonitor'
+        # monitor_name = 'GammaCorrect30'
 
         mouseid = 'testmouse' # TODO CHANGE BEFORE EXPERIMENT
 
@@ -30,8 +30,8 @@ def run_script(**kwargs):
         gray_periods = 1 # * (duration_on + duration_off) seconds
         repetitions = 1
 
-        duration_on = 3
-        duration_off = 3
+        duration_on = 1
+        duration_off = 1
 
         random = True
 
@@ -83,9 +83,7 @@ def run_script(**kwargs):
                     show_clock=show_clock,
                     mouseid=mouseid)
 
-        # stim.run(duration=Duration*60)
-        stim.run(duration=30)
-
+        stim.run(duration=Duration*60)
 
         print ""
         print "===============Done==============="

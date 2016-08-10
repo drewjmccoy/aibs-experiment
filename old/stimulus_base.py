@@ -52,7 +52,7 @@ class StimBase(Publisher):
 
         self.startdatetime = datetime.datetime.now()
 
-        self.logdir = r"\\aibsdata\neuralcoding\Behavior\Data"
+        self.logdir = r"C:/Users/drewm/Documents/GitHub/psychopy-scripts"
         self.backupdir = None
 
         self.window = window

@@ -1,6 +1,8 @@
 """@author Drew McCoy <drewm@alleninstitute.org>
 Setting up stimuli for experiment
 """
+# TODO mess with contrast
+# TODO implement Shawn's interval changes
 
 from psychopy import visual, core, event, monitors
 from shapes import SkeletonNode, SkeletonStim, MotionStim
@@ -66,7 +68,7 @@ class Stim(StimBase):
         stim_index = 0
         interval_length = self.duration_on + self.duration_off
         last_interval_time = 0
-        stim_set = self.shapes
+        stim_set = self.dots
         repetition = 0
         gray_index = 0
         show_stim = False
@@ -154,8 +156,6 @@ class Stim(StimBase):
                     print str(self.window.frameIntervals[-1])
 
         # -------------------------------END MAIN LOOP-----------------------------------
-        # print "SAVING FRAMES------------------------------"
-        # self.window.saveMovieFrames(fileName='\\\\aibsdata2\\nc-ophys\\Doug\\Drew_Summer_Project\\foo\\stimulus.gif')
 
         # cleanup
         print "SHUTTING DOWN"
@@ -167,10 +167,10 @@ class Stim(StimBase):
 
         # order 1
         # shape_0
-        # node_b = SkeletonNode(position=(0, 200))
-        # node_a = SkeletonNode(position=(0, -200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=0, thickness=shape_thickness)
-        # result.append(shape)
+        node_b = SkeletonNode(position=(0, 200))
+        node_a = SkeletonNode(position=(0, -200), connections=[node_b])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=0, thickness=shape_thickness)
+        result.append(shape)
 
         # shape_1
         # node_b = SkeletonNode(position=(-200, 0))
@@ -202,20 +202,20 @@ class Stim(StimBase):
 
         # order 3
         # shape_5
-        # node_d = SkeletonNode(position=(-100, 200))
-        # node_c = SkeletonNode(position=(-100, 0), connections=[node_d])
-        # node_b = SkeletonNode(position=(100, 0), connections=[node_c])
-        # node_a = SkeletonNode(position=(100, -200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=5, thickness=shape_thickness)
-        # result.append(shape)
+        node_d = SkeletonNode(position=(-100, 200))
+        node_c = SkeletonNode(position=(-100, 0), connections=[node_d])
+        node_b = SkeletonNode(position=(100, 0), connections=[node_c])
+        node_a = SkeletonNode(position=(100, -200), connections=[node_b])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=5, thickness=shape_thickness)
+        result.append(shape)
 
         # shape_6
-        # node_d = SkeletonNode(position=(-200, 100))
-        # node_c = SkeletonNode(position=(200, 100))
-        # node_b = SkeletonNode(position=(0, -200))
-        # node_a = SkeletonNode(position=(0, 0), connections=[node_b, node_c, node_d])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=6, thickness=shape_thickness)
-        # result.append(shape)
+        node_d = SkeletonNode(position=(-200, 100))
+        node_c = SkeletonNode(position=(200, 100))
+        node_b = SkeletonNode(position=(0, -200))
+        node_a = SkeletonNode(position=(0, 0), connections=[node_b, node_c, node_d])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=6, thickness=shape_thickness)
+        result.append(shape)
 
         # shape_7
         # node_d = SkeletonNode(position=(-200, 200))
