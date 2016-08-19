@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'\\AIBSDATA2\nc-ophys\Doug\Drew_Summer_Project\Experiment5Code')
+# sys.path.append(r'\\AIBSDATA2\nc-ophys\Doug\Drew_Summer_Project\Experiment5Code')
 print sys.path
 from stimulus import Stim
 from psychopy import visual,logging,monitors,core,event
@@ -23,12 +23,12 @@ def run_script(**kwargs):
         # TODO change file directory for pkl
 
         dot_size = 46
-        num_dots = 15
+        num_dots = 17
         shape_thickness = 90
-        field_size = (200, 200)
+        field_size = (250, 250)
 
         gray_periods = 1 # * (duration_on + duration_off) seconds
-        repetitions = 1
+        repetitions = 8
 
         duration_on = 3
         duration_off = 3
@@ -83,9 +83,8 @@ def run_script(**kwargs):
                     show_clock=show_clock,
                     mouseid=mouseid)
 
-        # stim.run(duration=Duration*60)
-        stim.run(duration=30)
-
+        stim.run(duration=Duration*60)
+        # stim.run(duration=30)
 
         print ""
         print "===============Done==============="

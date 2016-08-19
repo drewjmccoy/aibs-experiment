@@ -117,7 +117,7 @@ class SkeletonStim(object):
             self._shape_list.append(rectangle)
             self._build_shape_list_helper(window, current.connections[i])
 
-class MotionStim:
+class MotionStim(object):
     """A motion stimulus."""
 
     class _Dot:

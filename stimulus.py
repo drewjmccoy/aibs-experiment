@@ -92,7 +92,7 @@ class Stim(StimBase):
             interval_time = time % interval_length
 
             # change stimuli at the top of the interval, reset opacity
-            if ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
+            f ceil(last_interval_time) == interval_length and floor(interval_time) == 0:
                 if gray_period:
                     gray_index += 1
                 else:
@@ -165,95 +165,43 @@ class Stim(StimBase):
     def get_shapes(self, window, shape_thickness):
         result = []
 
-        # order 1
-        # shape_0
-        # node_b = SkeletonNode(position=(0, 200))
-        # node_a = SkeletonNode(position=(0, -200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=0, thickness=shape_thickness)
-        # result.append(shape)
-
-        # shape_1
-        # node_b = SkeletonNode(position=(-200, 0))
-        # node_a = SkeletonNode(position=(200, 0), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=1, thickness=shape_thickness)
-        # result.append(shape)
-
-        # shape_2
-        # node_b = SkeletonNode(position=(-200, -200))
-        # node_a = SkeletonNode(position=(200, 200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=2, thickness=shape_thickness)
-        # result.append(shape)
-
-
-        # order 2
-        # shape_3
-        node_c = SkeletonNode(position=(200, 100))
-        node_b = SkeletonNode(position=(200, -100))
-        node_a = SkeletonNode(position=(-200, 0), connections=[node_b, node_c])
-        shape = SkeletonStim(window=window, root=node_a, stimulus_id=3, thickness=shape_thickness)
+        node_d = SkeletonNode(position=(0, 125))
+        node_c = SkeletonNode(position=(-75, 50))
+        node_b = SkeletonNode(position=(75, 50))
+        node_a = SkeletonNode(position=(0, 50), connections=[node_b, node_c, node_d])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
         result.append(shape)
 
-        # shape_4
-        # node_c = SkeletonNode(position=(-100, 200))
-        # node_b = SkeletonNode(position=(-100, -200))
-        # node_a = SkeletonNode(position=(100, 0), connections=[node_b, node_c])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=4, thickness=shape_thickness)
-        # result.append(shape)
-
-        # order 3
-        # shape_5
-        # node_d = SkeletonNode(position=(-100, 200))
-        # node_c = SkeletonNode(position=(-100, 0), connections=[node_d])
-        # node_b = SkeletonNode(position=(100, 0), connections=[node_c])
-        # node_a = SkeletonNode(position=(100, -200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=5, thickness=shape_thickness)
-        # result.append(shape)
-
-        # shape_6
-        # node_d = SkeletonNode(position=(-200, 100))
-        # node_c = SkeletonNode(position=(200, 100))
-        # node_b = SkeletonNode(position=(0, -200))
-        # node_a = SkeletonNode(position=(0, 0), connections=[node_b, node_c, node_d])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=6, thickness=shape_thickness)
-        # result.append(shape)
-
-        # shape_7
-        # node_d = SkeletonNode(position=(-200, 200))
-        # node_c = SkeletonNode(position=(200, 200), connections=[node_d])
-        # node_b = SkeletonNode(position=(200, -200), connections=[node_c])
-        # node_a = SkeletonNode(position=(-200, -200), connections=[node_b])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=7, thickness=shape_thickness)
-        # result.append(shape)
-
-        # shape_8
-        node_d = SkeletonNode(position=(0, 200))
-        node_c = SkeletonNode(position=(-100, -200))
-        node_b = SkeletonNode(position=(100, -200))
-        node_a = SkeletonNode(position=(0, 0), connections=[node_b, node_c, node_d])
-        shape = SkeletonStim(window=window, root=node_a, stimulus_id=8, thickness=shape_thickness)
+        node_d = SkeletonNode(position=(-75, -75))
+        node_c = SkeletonNode(position=(-75, 0), connections=[node_d])
+        node_b = SkeletonNode(position=(75, 0), connections=[node_c])
+        node_a = SkeletonNode(position=(75, -75), connections=[node_b])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
         result.append(shape)
 
-        # shape_9
-        # node_d = SkeletonNode(position=(200, 0))
-        # node_c = SkeletonNode(position=(150, -200))
-        # node_b = SkeletonNode(position=(150, 200))
-        # node_a = SkeletonNode(position=(-200, 0), connections=[node_b, node_c, node_d])
-        # shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
-        # result.append(shape)
+        node_c = SkeletonNode(position=(-25, 125))
+        node_b = SkeletonNode(position=(-125, 125), connections=[node_c])
+        node_a = SkeletonNode(position=(-125, -75), connections=[node_b])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
+        result.append(shape)
+
+        node_c = SkeletonNode(position=(25, 125))
+        node_b = SkeletonNode(position=(125, 125), connections=[node_c])
+        node_a = SkeletonNode(position=(125, -75), connections=[node_b])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
+        result.append(shape)
+
+        node_d = SkeletonNode(position=(0, -25))
+        node_c = SkeletonNode(position=(-125, -125))
+        node_b = SkeletonNode(position=(125, -125))
+        node_a = SkeletonNode(position=(0, -125), connections=[node_b, node_c, node_d])
+        shape = SkeletonStim(window=window, root=node_a, stimulus_id=9, thickness=shape_thickness)
+        result.append(shape)
 
         return result
 
     def get_dots(self, window, dot_size, field_size, num_dots):
         result =[]
-
-        # dots = MotionStim(window=window,
-        #                     n_dots=num_dots,
-        #                     coherence=0,
-        #                     field_size=field_size,
-        #                     dot_size=dot_size,
-        #                     speed=7,
-        #                     stimulus_id=10)
-        # result.append(dots)
 
         dots = MotionStim(window=window,
                             n_dots=num_dots,
@@ -264,24 +212,6 @@ class Stim(StimBase):
                             stimulus_id=11)
         result.append(dots)
 
-        # dots = MotionStim(window=window,
-        #                     n_dots=num_dots,
-        #                     coherence=.5,
-        #                     field_size=field_size,
-        #                     dot_size=dot_size,
-        #                     speed=7,
-        #                     stimulus_id=12)
-        # result.append(dots)
-
-        # dots = MotionStim(window=window,
-        #                     n_dots=num_dots,
-        #                     coherence=.5,
-        #                     field_size=field_size,
-        #                     dot_size=dot_size,
-        #                     speed=7,
-        #                     stimulus_id=13)
-        # result.append(dots)
-
         dots = MotionStim(window=window,
                             n_dots=num_dots,
                             coherence=.9,
@@ -291,15 +221,6 @@ class Stim(StimBase):
                             stimulus_id=14)
         result.append(dots)
 
-        # dots = MotionStim(window=window,
-        #                     n_dots=num_dots,
-        #                     coherence=0,
-        #                     field_size=field_size,
-        #                     dot_size=dot_size,
-        #                     speed=10,
-        #                     stimulus_id=15)
-        # result.append(dots)
-
         dots = MotionStim(window=window,
                             n_dots=num_dots,
                             coherence=0,
@@ -308,15 +229,6 @@ class Stim(StimBase):
                             speed=10,
                             stimulus_id=16)
         result.append(dots)
-
-        # dots = MotionStim(window=window,
-        #                     n_dots=num_dots,
-        #                     coherence=.5,
-        #                     field_size=field_size,
-        #                     dot_size=dot_size,
-        #                     speed=10,
-        #                     stimulus_id=17)
-        # result.append(dots)
 
         dots = MotionStim(window=window,
                             n_dots=num_dots,
