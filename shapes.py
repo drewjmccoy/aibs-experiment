@@ -1,5 +1,5 @@
 """@author Drew McCoy <drewm@alleninstitute.org>
-Defines Rectangle, SkeletonNode, SkeletonStim
+Defines SkeletonNode, SkeletonStim, MotionStim
 """
 
 from psychopy import visual

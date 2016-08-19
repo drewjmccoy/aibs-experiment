@@ -1,3 +1,7 @@
+"""@author Drew McCoy <drewm@alleninstitute.org>
+Main script for the experiment
+"""
+
 import sys
 # sys.path.append(r'\\AIBSDATA2\nc-ophys\Doug\Drew_Summer_Project\Experiment5Code')
 print sys.path
