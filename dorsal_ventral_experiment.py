@@ -9,7 +9,8 @@ from stimulus import Stim
 from psychopy import visual,logging,monitors,core,event
 import numpy as np
 
-def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO MATCH YOUR FUNCTION'S KEYS
+# RENAME SOME KEYS IN THE KWARGS_DICT TO MATCH YOUR FUNCTION'S KEYS
+def reformat_mouse_user(kwargs_dict):
     # pop removes a key from a dictionary and returns the value that was associated with that key
     kwargs_dict["mouseid"] = kwargs_dict.pop("mouse_id")
     kwargs_dict["userid"] = kwargs_dict.pop("user_id")
@@ -17,8 +18,8 @@ def reformat_mouse_user(kwargs_dict): # RENAME SOME KEYS IN THE KWARGS_DICT TO M
 def run_script(**kwargs):
 
         Duration = 60 # minutes
-        # monitor_name = 'testMonitor'
-        monitor_name = 'GammaCorrect30'
+        monitor_name = 'testMonitor'
+        # monitor_name = 'GammaCorrect30'
 
         mouseid = 'testmouse' # TODO CHANGE BEFORE EXPERIMENT
 
